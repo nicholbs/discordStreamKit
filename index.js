@@ -1,16 +1,54 @@
 require('dotenv').config();
 const fs = require('fs');
 const Discord = require('discord.js');
+const discordTTS=require("discord-tts");
+const { serverID } = require('./global_variables');
 const client = new Discord.Client();
+const klient = new Discord.Client();
 const TOKEN = process.env.TOKEN;
+const TOKEN2 = process.env.TOKEN2;
 const prefix = process.env.PREFIX;
-const path = process.env.PATH;
- 
-client.login(TOKEN);
+
 
 client.on('ready', () => {
-  console.info(`Logged in as ${client.user.tag}!`);
+    console.info(`client Logged in as ${client.user.tag}!`);
+    client.channels.cache.get(serverID);
+    // console.log(serverID);
 });
+  
+// Client ChatBot
+client.login(TOKEN);
+
+// Klient guttaGangBang
+klient.login(TOKEN2);
+
+klient.on('ready', () => {
+    console.info(`klient Logged in as ${klient.user.tag}!`);
+    klient.channels.cache.get(serverID);
+});
+  
+klient.on('message', message => {
+    console.log("Klient Nå kom en melding: " + message)
+    if (!message.content.startsWith(prefix)){
+        return;
+    } 
+
+	const args = message.content.slice(prefix.length).trim().split(/ +/);
+
+    if (message.content.includes("dono")){
+        const broadcast = client.voice.createBroadcast();
+        var channelId=message.member.voice.channelID;
+        var channel=klient.channels.cache.get(channelId);
+        channel.join().then(connection => {
+            broadcast.play(discordTTS.getVoiceStream("Thanks for " + args +" cash money"));
+            const dispatcher=connection.play(broadcast);
+        })
+    }    
+        
+});
+
+
+
 
 
 /***************************************************************************************
@@ -22,20 +60,6 @@ client.on('ready', () => {
  **************************************************************************************/
  client.commands = new Discord.Collection();
 
-// bot.on('message', msg => {
-//   if (msg.content === 'ping') {
-//     msg.reply('pong');
-//     msg.channel.send('pong');
-
-//   } else if (msg.content.startsWith('!kick')) {
-//     if (msg.mentions.users.size) {
-//       const taggedUser = msg.mentions.users.first();
-//       msg.channel.send(`You wanted to kick: ${taggedUser.username}`);
-//     } else {
-//       msg.reply('Please tag a valid user!');
-//     }
-//   }
-// });
 
 /***************************************************
  * Array of names for files inside 'commands' folder

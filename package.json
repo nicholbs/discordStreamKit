@@ -9,7 +9,9 @@
   "author": "Michiel Mulders",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.5.1",
+    "@discordjs/opus": "github:discordjs/opus",
+    "discord-tts": "^1.0.3",
+    "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
     "image-size": "^1.0.0",
