@@ -19,7 +19,9 @@ module.exports = {
                     var nyInnhold = data.replace('replaceMeFirst', donation.donationCurrent);
                     
                     var prosent = donation.donationCurrent / donation.donationGoal * 100
-                    
+                    if (prosent < 0) {
+                        prosent = 0;
+                    }
                     // console.log("donation etter: " + donation.donationCurrent)
                     
                     nyInnhold = nyInnhold.replace('replaceMeSecond', prosent);
