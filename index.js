@@ -10,6 +10,13 @@ const TOKEN2 = process.env.TOKEN2;
 const prefix = process.env.PREFIX;
 
 
+var donationCurrent = 0;
+var donationGoal = 10000;
+
+module.exports = {
+    donationCurrent,
+    donationGoal
+}
 client.on('ready', () => {
     console.info(`client Logged in as ${client.user.tag}!`);
     client.channels.cache.get(serverID);
